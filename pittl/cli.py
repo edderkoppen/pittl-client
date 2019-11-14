@@ -66,12 +66,9 @@ def query(conn, args):
         for x in what:
             if x == 'experiment':
                 rsp, data = send(conn, Request.Q_EXP)
-                data['experiment'] = format_experiment(args,
-                                                       data['experiment'])
                 info.update(data)
             elif x == 'timing':
                 rsp, data = send(conn, Request.Q_TIME)
-                data['timing'] = format_timing(args, data['timing'])
                 info.update(data)
             elif x == 'sequence':
                 # TODO: Sequences get very big there needs to be more here
