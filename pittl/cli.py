@@ -30,17 +30,13 @@ def receive(conn):
     return pickle.loads(conn.recv(4096))
 
 
-def stream_receive(conn):
-    pass
-
-
 def send(conn, msg, data=None):
     b = pickle.dumps((msg, data))
     conn.send(b)
 
 
 def send_and_receive(conn, msg, data=None):
-    send(msg, data)
+    send(conn, msg, data)
     return receive(conn)
 
 
