@@ -7,7 +7,7 @@ import socket
 import sys
 import time
 
-from pittl.shared import PORT, Request
+from pittl.shared import PORT, Response, Request
 
 
 # Constants
@@ -30,9 +30,17 @@ def receive(conn):
     return pickle.loads(conn.recv(4096))
 
 
+def stream_receive(conn):
+    pass
+
+
 def send(conn, msg, data=None):
     b = pickle.dumps((msg, data))
     conn.send(b)
+
+
+def send_and_receive(conn, msg, data=None):
+    send(msg, data)
     return receive(conn)
 
 
@@ -56,7 +64,7 @@ def query(conn, args):
         # Continuous program query
         try:
             while True:
-                rsp, data = send(conn, Request.Q_PROG)
+                rsp, data = send_and_receive(conn, Request.Q_PROG)
                 pprint(data)
                 time.sleep(QUERY_DELAY)
         except KeyboardInterrupt:
@@ -65,14 +73,28 @@ def query(conn, args):
         info = {}
         for x in what:
             if x == 'program':
-                rsp, data = send(conn, Request.Q_PROG)
+                rsp, data = send_and_receive(conn, Request.Q_PROG)
                 info.update(data)
             elif x == 'timing':
-                rsp, data = send(conn, Request.Q_TIME)
+                rsp, data = send_and_receive(conn, Request.Q_TIME)
                 info.update(data)
             elif x == 'sequence':
-                # TODO: Sequences get very big there needs to be more here
-                pprint('querying sequences is currently unsupported')
+                send(conn, Request.Q_SEQ)
+
+                seq = {'staged': [], 'committed': []}
+                which = None
+                while True:
+                    rsp, data = receive(conn)
+                    if rsp == Response.SUCCESS:
+                        break
+
+                    if rsp == Response.BEGIN:
+                        which = data
+
+                    if rsp == Response.DATA:
+                        if data is not None:
+                            seq[which].append(data)
+                info.update({'sequence': seq})
 
         pprint(info)
 
@@ -85,9 +107,8 @@ def stage_timing(conn, args):
                    seconds=args.seconds,
                    microseconds=args.milliseconds * 1000)
     total = td.total_seconds()
-    event = send(conn,
-                 Request.STAGE_TIMING,
-                 (total, args.exposure, args.resolution))
+    event = send_and_receive(conn, Request.STAGE_TIMING,
+                             (total, args.exposure, args.resolution))
     pprint(event)
 
 
@@ -97,21 +118,21 @@ def stage_sequence(conn, args):
         rq = Request.STG_SEQ_REG
     else:
         rq = Request.STG_SEQ_RAND
-    event = send(conn, rq)
+    event = send_and_receive(conn, rq)
     pprint(event)
 
 
 @connect
 def start(conn, args):
     time.sleep(args.start_wait)
-    event = send(conn, Request.START)
+    event = send_and_receive(conn, Request.START)
     pprint(event)
 
 
 @connect
 def stop(conn, args):
     time.sleep(args.stop_wait)
-    event = send(conn, Request.STOP)
+    event = send_and_receive(conn, Request.STOP)
     pprint(event)
 
 
