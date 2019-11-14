@@ -42,7 +42,7 @@ def receive_stream(conn):
         ba = bytes()
         for i in range(n):
             b = conn.recv(4096)
-            ba + b
+            ba += b
         data = pickle.loads(ba)
     except socket.timeout:
         data = None
@@ -87,6 +87,7 @@ def query(conn, args):
         except KeyboardInterrupt:
             pass
     else:
+        prn = pprint
         info = {}
         for x in what:
             if x == 'program':
@@ -100,7 +101,8 @@ def query(conn, args):
                 rsp, data = receive_stream(conn)
                 if data is not None:
                     info.update(data)
-        pprint(info)
+                    prn = print
+        prn(info)
 
 
 @connect
