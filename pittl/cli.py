@@ -140,9 +140,6 @@ def main(args=None):
                         help='ip address of pittl pi')
     subparsers = parser.add_subparsers()
 
-    # Config parser
-    config_parser = subparsers.add_parser('config', help='config parser')
-
     # Query parser
     query_parser = subparsers.add_parser('query', help='query parser')
     query_parser.add_argument('query_what',
