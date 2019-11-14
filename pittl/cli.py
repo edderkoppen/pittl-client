@@ -10,7 +10,7 @@ import time
 from pittl.shared import PORT, Request
 
 
-def main(raw_args=sys.argv):
+def main(raw_args=sys.argv[1:]):
     # Main parser
     parser = argparse.ArgumentParser()
     parser.add_argument('ip',
@@ -112,7 +112,10 @@ def main(raw_args=sys.argv):
 
 
     # Parse args
-    args = parser.parse_args(raw_args)
+    try:
+        args = parser.parse_args(raw_args)
+    except SystemExit:
+        pass
 
     # Constants
     HOST = args.ip
