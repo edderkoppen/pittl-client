@@ -26,11 +26,14 @@ def remote(host, port):
     return s
 
 
+def receive(conn):
+    return pickle.loads(conn.recv(4096))
+
+
 def send(conn, msg, data=None):
     b = pickle.dumps((msg, data))
     conn.send(b)
-    event = pickle.loads(conn.recv(4096))
-    return event
+    return receive(conn)
 
 
 def connect(fn):
