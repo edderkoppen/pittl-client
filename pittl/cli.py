@@ -15,7 +15,7 @@ TIMEOUT = 30
 QUERY_DELAY = 2
 QUERY_MAP = {'timing': Request.Q_TIME,
              'sequence': Request.Q_SEQ,
-             'experiment': Request.Q_EXP}
+             'program': Request.Q_PROG}
 
 
 # Utils
@@ -49,23 +49,23 @@ def connect(fn):
 @connect
 def query(conn, args):
     what = set(args.query_what[0])
-    if what != {'experiment'}:
+    if what != {'program'}:
         args.continuous = False
 
     if args.continuous:
-        # Continuous experiment query
+        # Continuous program query
         try:
             while True:
-                rsp, data = send(conn, Request.Q_EXP)
-                pprint(format_experiment(args, data['experiment']))
+                rsp, data = send(conn, Request.Q_PROG)
+                pprint(data)
                 time.sleep(QUERY_DELAY)
         except KeyboardInterrupt:
             pass
     else:
         info = {}
         for x in what:
-            if x == 'experiment':
-                rsp, data = send(conn, Request.Q_EXP)
+            if x == 'program':
+                rsp, data = send(conn, Request.Q_PROG)
                 info.update(data)
             elif x == 'timing':
                 rsp, data = send(conn, Request.Q_TIME)
@@ -152,7 +152,7 @@ def main(args=None):
                               help='what to query',
                               choices=['timing',
                                        'sequence',
-                                       'experiment'],
+                                       'program'],
                               action='append')
     query_parser.add_argument('-f', '--format',
                               dest='format',
@@ -175,31 +175,31 @@ def main(args=None):
                                      metavar='X',
                                      type=float,
                                      help='exposure to be given, in fraction '
-                                          'of total experimental time')
+                                          'of total program time')
     stage_timing_parser.add_argument('resolution',
                                      metavar='R',
                                      type=float,
-                                     help='experimental resolution, in seconds')
+                                     help='program resolution, in seconds')
     stage_timing_parser.add_argument('-D', '--days',
                                      type=float,
                                      default=0.0,
-                                     help='add days to experiment time')
+                                     help='add days to program time')
     stage_timing_parser.add_argument('-H', '--hours',
                                      type=float,
                                      default=0.0,
-                                     help='add hours to experiment time')
+                                     help='add hours to program time')
     stage_timing_parser.add_argument('-M', '--minutes',
                                      type=float,
                                      default=0.0,
-                                     help='add minutes to experiment time')
+                                     help='add minutes to program time')
     stage_timing_parser.add_argument('-S', '--seconds',
                                      type=float,
                                      default=0.0,
-                                     help='add seconds to experiment time')
+                                     help='add seconds to program time')
     stage_timing_parser.add_argument('-m', '--milliseconds',
                                      type=float,
                                      default=0.0,
-                                     help='add milliseconds to experiment time')
+                                     help='add milliseconds to program time')
 
     # Parse stage sequence
     stage_sequence_parser = stage_subparsers.add_parser('sequence')
