@@ -41,35 +41,6 @@ def connect(fn):
 
 
 # Client routines
-def format_experiment(args, experiment):
-    progress = experiment['progress']
-    if progress is not None:
-        progress = round(progress * 1000) / 1000
-        experiment['progress'] = progress
-
-    eta = experiment['eta']
-    if eta is not None:
-        eta = str(timedelta(seconds=eta))
-        experiment['eta'] = eta
-
-    started = experiment['started']
-    if started is not None:
-        started = str(datetime.fromtimestamp(started))
-        experiment['started'] = started
-
-    return experiment
-
-
-def format_timing(args, timing):
-    if timing['staged'] is not None:
-        timing['staged'] = timing['staged'].to_dict()
-    else:
-        timing['staged'] = {}
-    if timing['committed'] is not None:
-        timing['committed'] = timing['committed'].to_dict()
-    else:
-        timing['committed'] = {}
-    return timing
 
 
 @connect
