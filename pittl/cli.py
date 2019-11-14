@@ -30,6 +30,29 @@ def receive(conn):
     return pickle.loads(conn.recv(4096))
 
 
+def receive_stream(conn):
+    # Header
+    hdr = pickle.loads(conn.recv(4096))
+    if hdr[0] != Response.STREAM:
+        pprint('Erroneous data received')
+    n = hdr[1]
+
+    # Body
+    try:
+        ba = bytes()
+        for i in range(n):
+            b = conn.recv(4096)
+            ba + b
+        data = pickle.loads(ba)
+    except socket.timeout:
+        data = None
+
+    # Terminator
+    # Not really necessary
+    msg, _ = pickle.loads(conn.recv(4096))
+    return (msg, data)
+
+
 def send(conn, msg, data=None):
     b = pickle.dumps((msg, data))
     conn.send(b)
@@ -48,8 +71,6 @@ def connect(fn):
 
 
 # Client routines
-
-
 @connect
 def query(conn, args):
     what = set(args.query_what[0])
@@ -76,22 +97,9 @@ def query(conn, args):
                 info.update(data)
             elif x == 'sequence':
                 send(conn, Request.Q_SEQ)
-
-                seq = {'staged': [], 'committed': []}
-                which = None
-                while True:
-                    rsp, data = receive(conn)
-                    if rsp == Response.SUCCESS:
-                        break
-
-                    if rsp == Response.BEGIN:
-                        which = data
-
-                    if rsp == Response.DATA:
-                        if data is not None:
-                            seq[which].append(data)
-                info.update({'sequence': seq})
-
+                rsp, data = receive_stream(conn)
+                if data is not None:
+                    info.update(data)
         pprint(info)
 
 
