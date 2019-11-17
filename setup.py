@@ -102,7 +102,7 @@ setup(
     # executes the function `main` from this package when invoked:
     entry_points={  # Optional
         'console_scripts': [
-            'pittl=pittl.cli:main',
+            'pittl=pittl.__main__:main',
         ],
     },
 )

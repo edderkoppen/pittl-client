@@ -27,7 +27,8 @@ def remote(host, port):
 
 
 def receive(conn):
-    return pickle.loads(conn.recv(4096))
+    event = pickle.loads(conn.recv(4096))
+    return str(Response(event[0])), event[1]
 
 
 def receive_stream(conn):
@@ -54,7 +55,7 @@ def receive_stream(conn):
 
 
 def send(conn, msg, data=None):
-    b = pickle.dumps((msg, data))
+    b = pickle.dumps((msg.value, data))
     conn.send(b)
 
 
