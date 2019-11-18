@@ -58,7 +58,7 @@ The PiTTL command-line interface works by specifying the ip address of the PiTTL
 
 > pittl ip {stage, query, start, stop}
 
-Note that in order for the PiTTL client to reach a controller at the specified ip address, they both have to be on the same network. Pay attention to the interface that the PiTTL controller is using (e.g. ethernet, wifi) to figure this out. As an example, consider that there is a PiTTL controller whose HAT LCD indicates the ip address is 172.20.172.79. The client may enter a command such as
+Note that in order for the PiTTL client to reach a controller at the specified ip address, they both have to be on the same network. Pay attention to the interface that the PiTTL controller is using (e.g. ethernet, wifi) and use your knowledge of the local internet architecture to figure this which network this is. As an example, consider that there is a PiTTL controller whose HAT LCD indicates the ip address is 172.20.172.79. The client may enter a command such as
 
 > pittl 172.20.172.79 stage timing -S 120 0.1 0.05
 
