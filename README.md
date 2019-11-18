@@ -111,7 +111,7 @@ which returns both the staged and committed timing and the staged and committed 
 
 > pittl 172.20.172.79 query sequence > 20191118_program.txt
 
-where the result of querying for the sequence is piped to a program file.
+where the result of querying for the sequence is piped to a file.
 
 To continuouslt display the progress and eta of a program running on a controller at 172.20.172.79, one would enter
 
