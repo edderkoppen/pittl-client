@@ -129,7 +129,7 @@ e.g.
 > pittl 172.20.172.79 start
 
 #### Stop
-If a running program needs to be interrupted, a program can be stopped with the "stop" sub-command.
+If a running program needs to be interrupted, a program can be stopped with the *stop* sub-command.
 
 > pittl ip stop
 
