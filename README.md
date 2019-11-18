@@ -107,7 +107,7 @@ which returns the staged and committed timing in the controller at 172.20.172.79
 
 > pittl 172.20.172.79 query timing sequence
 
-which returns both the staged and committed timing and the staged and committed sequence in the controller at 172.20.172.79. Note that the data returned by querying for a sequence is often really large, and potnetially obfuscates any other data requested, so it is not generally advised that the response be streamed to stdout. A more reasonable query (on \*NIX-based systems) might be
+which returns both the staged and committed timing and the staged and committed sequence in the controller at 172.20.172.79. Note that the data returned by querying for a sequence is often really large, and potentially obfuscates any other data requested, so it is not generally advised that the response be streamed to stdout. A more reasonable query (on \*NIX-based systems) might be
 
 > pittl 172.20.172.79 query sequence > 20191118_program.txt
 
