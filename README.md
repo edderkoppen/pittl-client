@@ -71,11 +71,11 @@ Both timing and sequences may be staged with the *stage* sub-command.
 > pittl ip stage {timing, sequence}
 
 ##### Timing
-The *timing* staging sub-sub-command is invoked with the following signature.
+The *timing* stage sub-sub-command is invoked with the following signature.
 
 > pittl ip stage timing -D days -H hours -M minutes -S seconds -m milliseconds exposure resolution
 
-The optional argument each add to the specified total time of the timing (see https://github.com/edderkoppen/pittl-ctlr/blob/master/README.md#usage) in different units of time. They each accept floating point values. The *exposure* argument requires a floating point value between 0 and 1 inclusive, representing the specified exposure fraction of the timing. The *resolution* parameter accepts a floating point value in units of seconds.
+Each optional argument adds to specified total time (see https://github.com/edderkoppen/pittl-ctlr/blob/master/README.md#usage) with different units of time. Each accepts floating point values. The *exposure* argument requires a floating point value between 0 and 1 inclusive, representing the specified exposure fraction of the timing. The *resolution* parameter accepts a floating point value in units of seconds.
 
 An example of a valid call would be
 
@@ -84,7 +84,7 @@ An example of a valid call would be
 and would tell the controller at 172.20.172.79 to stage timing with 2.5 hours and 30 seconds, 10% exposure, and a resolution of 50ms.
 
 ##### Sequence
-The *sequence* staging sub-sub-command is invoked with the following signature
+The *sequence* stage sub-sub-command is invoked with the following signature
 
 > pittl ip stage sequence
 
@@ -124,7 +124,7 @@ If timing and a sequence have already been staged, a program can be started with
 
 > pittl ip start
 
-e.g.
+This will fail if no sequence has been staged. As an example
 
 > pittl 172.20.172.79 start
 
