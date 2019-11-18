@@ -62,7 +62,7 @@ Note that in order for the PiTTL client to reach a controller at the specified i
 
 > pittl 172.20.172.79 stage timing -S 120 0.1 0.05
 
-to specify some timing to stage (see https://github.com/edderkoppen/pittl-client/edit/master/README.md#stage%20timing).
+to specify some timing to stage.
 
 ### Sub-commands
 #### Staging
