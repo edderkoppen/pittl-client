@@ -3,10 +3,10 @@ Raspberry Pi TTL Controller Client, 0.1.0
 nGelwan | 2019
 
 ## Introduction
-PiTTL is a collection of schematics and code which can be used to cheaply build a remotely-controllable random TTL sequence generator using a Raspberry Pi 4 (https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) and a couple of additional hardware components. It consists of two parts, the PiTTL controller (https://github.com/edderkoppen/pittl-ctlr), and the PiTTL client, contained in this repository. When pushed to the extreme, PiTTL supports generating sequences which run for at least a month consisting of pulses of less than 10ms duration. 
+PiTTL is a collection of schematics and code which can be used to cheaply build a remotely-controllable random TTL sequence generator using a Raspberry Pi 4 (https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) and a couple of additional hardware components. It consists of two parts, the PiTTL controller (https://github.com/extradosages/pittl-ctlr), and the PiTTL client, contained in this repository. When pushed to the extreme, PiTTL supports generating sequences which run for at least a month consisting of pulses of less than 10ms duration. 
 
 ## Overview
-The PiTTL client is a command-line interface used for interacting with a running PiTTL controller accessible on the network. Refer to https://github.com/edderkoppen/pittl-ctlr/blob/master/README.md#overview for an overview of the PiTTL controller. The concepts detailed there are essential in understanding how to make the most use out of the PiTTL client.
+The PiTTL client is a command-line interface used for interacting with a running PiTTL controller accessible on the network. Refer to https://github.com/extradosages/pittl-ctlr/blob/master/README.md#overview for an overview of the PiTTL controller. The concepts detailed there are essential in understanding how to make the most use out of the PiTTL client.
 
 ## Installation
 The PiTTL client has been tested on Windows 7+, on a couple common Debian- and Fedora-based Linux distros, and on MacOS. It only requires python3 (>=3.4) and python3-setuptools as a prerequisite.
@@ -39,7 +39,7 @@ You should see output indicating how to use the command-line tool.
 
 2. Install git. Use git to clone this repository. Navigate to the folder in which you want to house it and run
 
-> git clone https://github.com/edderkoppen/pittl-client
+> git clone https://github.com/extradosages/pittl-client
 
 3. To install the PiTTL client command-line interface, navigate to the repository root and run
 
@@ -52,7 +52,7 @@ Confirm the installation with
 You should see output indicating how to use the command-line tool.
 
 ## Usage
-Refer to https://github.com/edderkoppen/pittl-ctlr/blob/master/README.md#usage for the essential concepts in interacting with a PiTTL controller.
+Refer to https://github.com/extradosages/pittl-ctlr/blob/master/README.md#usage for the essential concepts in interacting with a PiTTL controller.
 
 The PiTTL command-line interface works by specifying the ip address of the PiTTL controller and a sub-command, i.e.
 
@@ -75,7 +75,7 @@ The *timing* stage sub-sub-command is invoked with the following signature.
 
 > pittl ip stage timing -D days -H hours -M minutes -S seconds -m milliseconds exposure resolution
 
-Each optional argument adds to specified total time (see https://github.com/edderkoppen/pittl-ctlr/blob/master/README.md#usage) with different units of time. Each accepts floating point values. The *exposure* argument requires a floating point value between 0 and 1 inclusive, representing the specified exposure fraction of the timing. The *resolution* parameter accepts a floating point value in units of seconds.
+Each optional argument adds to specified total time (see https://github.com/extradosages/pittl-ctlr/blob/master/README.md#usage) with different units of time. Each accepts floating point values. The *exposure* argument requires a floating point value between 0 and 1 inclusive, representing the specified exposure fraction of the timing. The *resolution* parameter accepts a floating point value in units of seconds.
 
 An example of a valid call would be
 
